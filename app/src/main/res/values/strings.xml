@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MeasuredByPictures</string>
+    <string name="settings">Settings</string>
+    <string name="take_photo">Take a photo</string>
+    <string name="all_photos">All photos</string>
 </resources>
