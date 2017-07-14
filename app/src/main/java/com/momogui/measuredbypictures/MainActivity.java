@@ -4,11 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,12 +16,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView mAllPhotos;
     private TextView mTakePhoto;
+    private Uri mPhotoUri;
 
     private final int ACTION_PICK_PHOTO_GALLERY = 99;
     private final int ACTION_PICK_PHOTO_CAMERA = 98;
@@ -71,11 +74,11 @@ public class MainActivity extends AppCompatActivity {
                 //Camera permission required for Marshmallow version
                 if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED) {
-                    // Callback onRequestPermissionsResult interceptadona Activity MainActivity
                     ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, ACTION_PICK_PHOTO_CAMERA);
                 } else {
-                    // permission has been granted, continue as usual
                     Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    mPhotoUri = FileProvider.getUriForFile(MainActivity.this, "com.momogui.measuredbypictures.fileprovider" , getOutputMediaFile());
+                    captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mPhotoUri);
                     startActivityForResult(captureIntent, ACTION_PICK_PHOTO_CAMERA);
                 }
             }
@@ -90,30 +93,29 @@ public class MainActivity extends AppCompatActivity {
 
         switch (requestCode) {
             case ACTION_PICK_PHOTO_CAMERA:
-                if (resultCode == Activity.RESULT_OK) {
-                    //pic coming from camera
-                    Bitmap bitmap = null;
-                    try {
-                        Uri mfileUri = new Uri.Builder().build();
-                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), mfileUri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-                break;
+//                if (resultCode == Activity.RESULT_OK) {
+//                    //pic coming from camera
+//                    Bitmap bitmap = null;
+//                    try {
+//                        Uri mfileUri = new Uri.Builder().build();
+//                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), mfileUri);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//                break;
 
             case ACTION_PICK_PHOTO_GALLERY:
 
                 if (resultCode == Activity.RESULT_OK) {
-                    //pick image from gallery
-                    Uri selectedImage = data.getData();
-                    Bitmap bitmap = null;
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    startActivity(ImageActivity.newInstance(this, mPhotoUri));
+                    //Uri selectedImage = data.getParcelableExtra(MediaStore.EXTRA_OUTPUT);
+//                    try {
+//                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), mPhotoUri);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
 //                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
 //
 //                    // Get the cursor
@@ -129,6 +131,21 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
+
+    }
+
+    private File getOutputMediaFile(){
+        File mediaStorageDir = new File(MainActivity.this.getFilesDir(), "photos");
+
+        if (!mediaStorageDir.exists()){
+            if (!mediaStorageDir.mkdirs()){
+                return null;
+            }
+        }
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        return new File(mediaStorageDir.getPath() + File.separator +
+                "IMG_"+ timeStamp + ".jpg");
     }
 
 
