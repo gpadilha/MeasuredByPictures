@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -30,8 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                //startActivity(new Intent(....));
-                Toast.makeText(this, "Not implemented", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, SettingActivity.class));
                 return true;
 
             default:
