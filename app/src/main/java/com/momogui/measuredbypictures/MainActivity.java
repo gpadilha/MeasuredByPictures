@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
         }
@@ -90,42 +88,15 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case ACTION_PICK_PHOTO_CAMERA:
-//                if (resultCode == Activity.RESULT_OK) {
-//                    //pic coming from camera
-//                    Bitmap bitmap = null;
-//                    try {
-//                        Uri mfileUri = new Uri.Builder().build();
-//                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), mfileUri);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                }
-//                break;
-
             case ACTION_PICK_PHOTO_GALLERY:
-
                 if (resultCode == Activity.RESULT_OK) {
-                    startActivity(ImageActivity.newInstance(this, mPhotoUri));
-                    //Uri selectedImage = data.getParcelableExtra(MediaStore.EXTRA_OUTPUT);
-//                    try {
-//                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), mPhotoUri);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
-//
-//                    // Get the cursor
-//                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-//                    // Move to first row
-//                    cursor.moveToFirst();
-//
-//                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//                    String imgDecodableString = cursor.getString(columnIndex);
-//                    cursor.close();
-//                    bitmap = BitmapFactory.decodeFile(imgDecodableString);
-
+                    mPhotoUri = data.getClipData().getItemAt(0).getUri();
+                    startActivity(ImageActivity.newInstance(this, mPhotoUri, Intent.ACTION_PICK));
+                }
+            break;
+            case ACTION_PICK_PHOTO_CAMERA:
+                if (resultCode == Activity.RESULT_OK) {
+                    startActivity(ImageActivity.newInstance(this, mPhotoUri, android.provider.MediaStore.ACTION_IMAGE_CAPTURE));
                 }
                 break;
         }

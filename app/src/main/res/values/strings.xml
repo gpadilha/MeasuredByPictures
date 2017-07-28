@@ -7,5 +7,6 @@
 
     <string name="enter_your_height">Enter your height.</string>
     <string name="text_set_cm">cm</string>
+    <string name="max_lines">Maximum of two lines</string>
 
 </resources>

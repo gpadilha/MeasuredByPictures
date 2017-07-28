@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 public class GalleryFragment extends Fragment {
 
@@ -21,7 +20,7 @@ public class GalleryFragment extends Fragment {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(getActivity(), "Hi, I'm the cat number "+position, Toast.LENGTH_SHORT).show();
+                startActivity(ImageActivity.newInstance(v.getContext(), ((GalleryItem)parent.getAdapter().getItem(position)).getUriWhithFileProvider(v.getContext()), android.provider.MediaStore.ACTION_IMAGE_CAPTURE));
             }
         });
 
