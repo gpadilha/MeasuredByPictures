@@ -9,8 +9,7 @@ import java.util.UUID;
 public class Setting {
     private UUID myUUID;
     private String myTitle;
-    private double myLength;
-
+    private double myHeight;
 
 
     public Setting(){
@@ -19,6 +18,12 @@ public class Setting {
 
     public Setting(UUID id){
         myUUID = id;
+    }
+
+    public Setting(Double height) {
+        this(UUID.randomUUID());
+        myHeight = height;
+
     }
 
     public UUID getMyUUID() {
@@ -37,11 +42,11 @@ public class Setting {
         this.myTitle = myTitle;
     }
 
-    public double getMyLength() {
-        return myLength;
+    public double getMyHeight() {
+        return myHeight;
     }
 
-    public void setMyLength(double myLength) {
-        this.myLength = myLength;
+    public void setMyHeight(double myHeight) {
+        this.myHeight = myHeight;
     }
 }

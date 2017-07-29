@@ -11,7 +11,7 @@ public class SettingDbSchema {
         public static final class Cols {
             public static final String UUID = "uuid";
             public static final String TITLE = "title";
-            public static final String LENGTH = "length";
+            public static final String HEIGHT = "height";
         }
     }
 }

@@ -2,9 +2,7 @@ package com.momogui.measuredbypictures;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
-
 import com.momogui.measuredbypictures.database.SettingDbSchema;
-
 import java.util.UUID;
 
 /**
@@ -24,11 +22,11 @@ public class SettingCursorWrapper extends CursorWrapper {
     public Setting getSetting(){
         String uuidString = getString(getColumnIndex(SettingDbSchema.SettingTable.Cols.UUID));
         String title = getString(getColumnIndex(SettingDbSchema.SettingTable.Cols.TITLE));
-        double length = getDouble(getColumnIndex(SettingDbSchema.SettingTable.Cols.LENGTH));
+        double height = getDouble(getColumnIndex(SettingDbSchema.SettingTable.Cols.HEIGHT));
 
         Setting setting = new Setting(UUID.fromString(uuidString));
         setting.setMyTitle(title);
-        setting.setMyLength(length);
+        setting.setMyHeight(height);
 
         return setting;
     }

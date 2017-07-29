@@ -15,16 +15,16 @@ import java.util.UUID;
  * Created by momo on 2017-07-13.
  */
 
-public class SettingStorage {
-    private static SettingStorage sSettngStorage;
+public class SettingStorage { // connector between database and activity
+    private static SettingStorage sSettingStorage;
     private Context myContext;
     private SQLiteDatabase myDatabase;
 
     public static SettingStorage get(Context context) {
-        if (sSettngStorage == null) {
-            sSettngStorage = new SettingStorage(context);
+        if (sSettingStorage == null) {
+            sSettingStorage = new SettingStorage(context);
         }
-        return sSettngStorage;
+        return sSettingStorage;
     }
 
     private SettingStorage(Context context) {
@@ -36,12 +36,12 @@ public class SettingStorage {
         ContentValues values = new ContentValues();
         values.put(SettingDbSchema.SettingTable.Cols.UUID, String.valueOf(setting.getMyUUID()));
         values.put(SettingDbSchema.SettingTable.Cols.TITLE, setting.getMyTitle());
-        values.put(SettingDbSchema.SettingTable.Cols.LENGTH, setting.getMyLength());
+        values.put(SettingDbSchema.SettingTable.Cols.HEIGHT, setting.getMyHeight());
 
         return values;
     }
 
-    public void addSetting(Setting setting) {
+    public void insertSetting(Setting setting) {
         ContentValues values = getContentValues(setting);
         myDatabase.insert(SettingDbSchema.SettingTable.NAME, null, values);
     }
@@ -102,7 +102,6 @@ public class SettingStorage {
                 new String[]{
                         id.toString()
                 }
-
         );
 
         try {
