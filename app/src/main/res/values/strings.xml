@@ -9,4 +9,7 @@
     <string name="text_set_cm">cm</string>
     <string name="max_lines">Maximum of two lines</string>
 
+    <string name="target_height_is">The target length is about...</string>
+    <string name="save_button">Save</string>
+
 </resources>

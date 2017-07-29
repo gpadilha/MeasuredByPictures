@@ -9,6 +9,10 @@
     android:gravity="center"
     android:padding="16dp"
     tools:context="com.momogui.measuredbypictures.SettingActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/current_height"/>
 
     <TextView
         android:id="@+id/enter_your_height"
@@ -24,10 +28,10 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/setting_users_height"
+            android:id="@+id/setting_user_height"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="40dp"
             android:layout_weight="10"
             android:textSize="32dp"/>
 
@@ -38,5 +42,11 @@
             android:text="@string/text_set_cm"/>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/save_button"
+        android:text="@string/save_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

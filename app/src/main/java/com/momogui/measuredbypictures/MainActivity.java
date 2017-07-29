@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         mAllPhotos = (TextView) findViewById(R.id.all_photos);
         mTakePhoto = (TextView) findViewById(R.id.take_photo);
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     mPhotoUri = data.getClipData().getItemAt(0).getUri();
                     startActivity(ImageActivity.newInstance(this, mPhotoUri, Intent.ACTION_PICK));
                 }
-            break;
+                break;
             case ACTION_PICK_PHOTO_CAMERA:
                 if (resultCode == Activity.RESULT_OK) {
                     startActivity(ImageActivity.newInstance(this, mPhotoUri, android.provider.MediaStore.ACTION_IMAGE_CAPTURE));
