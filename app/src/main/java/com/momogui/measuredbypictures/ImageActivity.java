@@ -81,6 +81,7 @@ public class ImageActivity extends Activity {
     public static Bitmap getSelectedPhoto(Activity activity) {
         Bitmap bitmap = null;
         try {
+            activity.getContentResolver().notifyChange((Uri) activity.getIntent().getParcelableExtra(EXTRA_PHOTO), null);
             bitmap = MediaStore.Images.Media.getBitmap(
                     activity.getContentResolver(),
                     (Uri) activity.getIntent().getParcelableExtra(EXTRA_PHOTO));

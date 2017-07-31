@@ -14,5 +14,7 @@
     <string name="undo">Undo</string>
     <string name="show_result">Show result</string>
     <string name="need_two_lines">Please, draw two lines</string>
+    <string name="draw_first_line">Draw a line above your body</string>
+    <string name="draw_second_line">Draw a line above the target</string>
 
 </resources>

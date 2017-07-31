@@ -32,6 +32,15 @@
         android:layout_marginTop="50dp"
         android:src="@drawable/logo"/>
 
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.momogui.measuredbypictures.GalleryFragment"
+        android:layout_width="match_parent"
+        android:layout_height="330dp"
+        android:layout_above="@+id/all_photos"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"/>
+
 
     <TextView
         android:id="@+id/all_photos"
@@ -40,11 +49,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="14dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginStart="30dp"
         android:layout_toStartOf="@+id/imageView"
         android:text="@string/all_photos"
-        android:textAlignment="center"/>
+        android:textAlignment="center" />
 
 
     <TextView
@@ -53,18 +62,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_alignTop="@+id/all_photos"
         android:layout_marginEnd="60dp"
         android:text="@string/take_photo"/>
 
-    <fragment
-        android:id="@+id/fragment"
-        android:name="com.momogui.measuredbypictures.GalleryFragment"
-        android:layout_width="match_parent"
-        android:layout_height="330dp"
-        android:layout_above="@+id/all_photos"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="15dp"/>
+
 
 
 </RelativeLayout>

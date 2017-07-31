@@ -13,7 +13,7 @@ public class GalleryItem {
     private Bitmap picture;
     private Uri pictureUri;
     private Bitmap thumbnail;
-    public static final int THUMBNAIL_SIZE = 250;
+    public static final int THUMBNAIL_SIZE = 265;
 
     public GalleryItem (Bitmap picture, Uri pictureUri){
         this.picture = picture;

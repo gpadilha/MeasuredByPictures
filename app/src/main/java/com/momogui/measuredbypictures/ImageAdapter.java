@@ -2,19 +2,14 @@ package com.momogui.measuredbypictures;
 
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.os.Environment.DIRECTORY_PICTURES;
 
 public class ImageAdapter extends BaseAdapter{
     private Context mContext;
@@ -23,16 +18,6 @@ public class ImageAdapter extends BaseAdapter{
     public ImageAdapter(Context c) {
         mContext = c;
         galleryItems = new ArrayList();
-
-        File[] dirs = mContext.getExternalFilesDirs(DIRECTORY_PICTURES);
-        for (File dir: dirs) {
-            String[] images = dir.list();
-            for(int i = images.length-1; i >=0 ; i--){
-                String imageFullPath = dir + "/" + images[i];
-                galleryItems.add(new GalleryItem(BitmapFactory.decodeFile(imageFullPath), Uri.parse(imageFullPath)));
-                if(galleryItems.size() == 40) return; //limit of 40 pictures on the main activity
-            }
-        }
     }
 
     public int getCount() {
@@ -54,6 +39,7 @@ public class ImageAdapter extends BaseAdapter{
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
             imageView.setLayoutParams(new GridView.LayoutParams(GalleryItem.THUMBNAIL_SIZE, GalleryItem.THUMBNAIL_SIZE));
+            imageView.setCropToPadding(true);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(8, 8, 8, 8);
         } else {
@@ -63,6 +49,15 @@ public class ImageAdapter extends BaseAdapter{
         imageView.setImageBitmap(galleryItems.get(position).getThumbnail());
 
         return imageView;
+    }
+
+    public List<GalleryItem> getGalleryItems(){
+        return galleryItems;
+    }
+
+    public void setGalleryItems(List<GalleryItem> items){
+        galleryItems.clear();
+        galleryItems.addAll(items);
     }
 
 }

@@ -40,6 +40,7 @@ public class DrawingView extends View {
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeWidth(20);
+        displayMessage();
     }
 
 
@@ -56,6 +57,7 @@ public class DrawingView extends View {
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeWidth(20);
+        displayMessage();
     }
 
     @Override
@@ -71,12 +73,17 @@ public class DrawingView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        float ratio = Math.max(getWidth()/mBitmap.getWidth(), getHeight()/mBitmap.getHeight());
+        canvas.drawColor(Color.BLACK);
 
-//        canvas.drawBitmap(mBitmap, new Rect(0, 0, mBitmap.getWidth(), mBitmap.getHeight()),
-//                new Rect(0, 0, getWidth(), getHeight()), mBitmapPaint);
+        //math to resize the picture
+        float ratio = Math.min((float)getWidth()/mBitmap.getWidth(), (float)getHeight()/mBitmap.getHeight());
+        int width = Math.round(mBitmap.getWidth()*ratio);
+        int height = Math.round(mBitmap.getHeight()*ratio);
+        int beginLeft = (getWidth() - width) / 2;
+        int beginTop = (getHeight() - height) / 2;
 
-        canvas.drawBitmap(mBitmap, null, new Rect(0, 0 , Math.round(mBitmap.getWidth()*ratio), Math.round(mBitmap.getHeight()*ratio)), null);
+        canvas.drawBitmap(mBitmap, null, new Rect(beginLeft, beginTop, beginLeft + width, beginTop + height), null);
+
         for(int i=0; i < mPathList.size(); i++) {
             setStrokeColor(i);
             canvas.drawPath(mPathList.get(i), mPaint);
@@ -129,6 +136,7 @@ public class DrawingView extends View {
                     Toast.makeText(getContext(), R.string.max_lines, Toast.LENGTH_LONG).show();
                     return true;
                 }
+                displayMessage();
                 break;
         }
 
@@ -142,6 +150,17 @@ public class DrawingView extends View {
                 break;
             default:
                 mPaint.setColor(Color.rgb(255, 26, 135));
+                break;
+        }
+    }
+
+    private void displayMessage(){
+        switch (mPathList.size()){
+            case 0:
+                Toast.makeText(getContext(), R.string.draw_first_line, Toast.LENGTH_SHORT).show();
+                break;
+            case 1:
+                Toast.makeText(getContext(), R.string.draw_second_line, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

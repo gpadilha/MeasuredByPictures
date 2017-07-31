@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -103,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == Activity.RESULT_OK) {
                     galleryAddPic();
                     startActivity(ImageActivity.newInstance(this, mPhotoUri, mCurrentImagePath));
+                }else{
+                    getContentResolver().delete(mPhotoUri, null, null);
                 }
                 break;
         }
@@ -119,9 +122,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File image = new File(mediaStorageDir.getPath() + File.separator +
-                "IMG_"+ timeStamp + ".jpg");
-        mCurrentImagePath = image.getAbsolutePath();
+        File image = null;
+        try {
+            image = File.createTempFile("IMG_"+ timeStamp, ".jpg", mediaStorageDir);
+            mCurrentImagePath = image.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return image;
     }
 

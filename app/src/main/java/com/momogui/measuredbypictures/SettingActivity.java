@@ -16,7 +16,7 @@ public class SettingActivity extends AppCompatActivity {
     private SettingStorage mStorage;
 
     private static final String TAG = "SettingActivity";
-    private static final String CURRENT_HEIGHT = "height";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +41,7 @@ public class SettingActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
     // mCurrentHeight will have the height value that user set.
     // get the most recent height from the database onCreate. if there's no height in the database then you can set it to nothing but if there's a data in the database then set that height data to textView text.
