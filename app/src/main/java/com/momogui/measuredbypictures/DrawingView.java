@@ -71,8 +71,12 @@ public class DrawingView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawBitmap(mBitmap, new Rect(0, 0, mBitmap.getWidth(), mBitmap.getHeight()),
-                new Rect(0, 0, getWidth(), getHeight()), mBitmapPaint);
+        float ratio = Math.max(getWidth()/mBitmap.getWidth(), getHeight()/mBitmap.getHeight());
+
+//        canvas.drawBitmap(mBitmap, new Rect(0, 0, mBitmap.getWidth(), mBitmap.getHeight()),
+//                new Rect(0, 0, getWidth(), getHeight()), mBitmapPaint);
+
+        canvas.drawBitmap(mBitmap, null, new Rect(0, 0 , Math.round(mBitmap.getWidth()*ratio), Math.round(mBitmap.getHeight()*ratio)), null);
         for(int i=0; i < mPathList.size(); i++) {
             setStrokeColor(i);
             canvas.drawPath(mPathList.get(i), mPaint);
