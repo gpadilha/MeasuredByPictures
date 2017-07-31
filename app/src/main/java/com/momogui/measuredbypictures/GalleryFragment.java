@@ -11,13 +11,17 @@ import android.widget.GridView;
 
 public class GalleryFragment extends Fragment {
 
+    private ImageAdapter mAdapter;
+    private GridView mGridView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_gallery, container);
-        GridView gridview = (GridView) rootView.findViewById(R.id.image_gallery);
-        gridview.setAdapter(new ImageAdapter(getActivity()));
+        mGridView = (GridView) rootView.findViewById(R.id.image_gallery);
+        mAdapter = new ImageAdapter(getActivity());
+        mGridView.setAdapter(mAdapter);
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 startActivity(ImageActivity.newInstance(v.getContext(), ((GalleryItem)parent.getAdapter().getItem(position)).getUriWhithFileProvider(v.getContext()), android.provider.MediaStore.ACTION_IMAGE_CAPTURE));

@@ -19,11 +19,14 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static android.os.Environment.DIRECTORY_PICTURES;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView mAllPhotos;
     private TextView mTakePhoto;
     private Uri mPhotoUri;
+    private String mCurrentImagePath;
 
     private final int ACTION_PICK_PHOTO_GALLERY = 99;
     private final int ACTION_PICK_PHOTO_CAMERA = 98;
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         mAllPhotos = (TextView) findViewById(R.id.all_photos);
         mTakePhoto = (TextView) findViewById(R.id.take_photo);
@@ -92,12 +95,14 @@ public class MainActivity extends AppCompatActivity {
             case ACTION_PICK_PHOTO_GALLERY:
                 if (resultCode == Activity.RESULT_OK) {
                     mPhotoUri = data.getClipData().getItemAt(0).getUri();
-                    startActivity(ImageActivity.newInstance(this, mPhotoUri, Intent.ACTION_PICK));
+                    mCurrentImagePath = mPhotoUri.getPath();
+                    startActivity(ImageActivity.newInstance(this, mPhotoUri, mCurrentImagePath));
                 }
                 break;
             case ACTION_PICK_PHOTO_CAMERA:
                 if (resultCode == Activity.RESULT_OK) {
-                    startActivity(ImageActivity.newInstance(this, mPhotoUri, android.provider.MediaStore.ACTION_IMAGE_CAPTURE));
+                    galleryAddPic();
+                    startActivity(ImageActivity.newInstance(this, mPhotoUri, mCurrentImagePath));
                 }
                 break;
         }
@@ -105,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private File getOutputMediaFile(){
-        File mediaStorageDir = new File(MainActivity.this.getFilesDir(), "photos");
+        File mediaStorageDir = MainActivity.this.getExternalFilesDir(DIRECTORY_PICTURES);
 
         if (!mediaStorageDir.exists()){
             if (!mediaStorageDir.mkdirs()){
@@ -114,9 +119,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        return new File(mediaStorageDir.getPath() + File.separator +
+        File image = new File(mediaStorageDir.getPath() + File.separator +
                 "IMG_"+ timeStamp + ".jpg");
+        mCurrentImagePath = image.getAbsolutePath();
+        return image;
     }
 
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentImagePath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+    }
 
 }

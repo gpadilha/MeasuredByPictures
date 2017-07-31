@@ -4,6 +4,7 @@ package com.momogui.measuredbypictures;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,6 +15,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.os.Environment.DIRECTORY_PICTURES;
+
 public class ImageAdapter extends BaseAdapter{
     private Context mContext;
     private List<GalleryItem> galleryItems;
@@ -22,12 +25,13 @@ public class ImageAdapter extends BaseAdapter{
         mContext = c;
         galleryItems = new ArrayList();
 
-        File[] dirs = mContext.getFilesDir().listFiles();
+        File[] dirs = mContext.getExternalFilesDirs(DIRECTORY_PICTURES);
         for (File dir: dirs) {
             String[] images = dir.list();
             for(String image : images) {
                 String imageFullPath = dir + "/" + image;
                 galleryItems.add(new GalleryItem(BitmapFactory.decodeFile(imageFullPath), Uri.parse(imageFullPath)));
+                if(galleryItems.size() == 40) return; //limit of 40 pictures on the main activity
             }
         }
     }

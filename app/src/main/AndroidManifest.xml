@@ -3,6 +3,7 @@
           package="com.momogui.measuredbypictures">
 
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.camera2"/>
 
@@ -20,6 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ImageActivity"/>
+        <activity android:name=".ResultActivity"/>
+        <activity android:name=".SettingActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -31,8 +34,6 @@
                 android:resource="@xml/file_paths"/>
         </provider>
 
-        <activity android:name=".ResultActivity">
-        </activity>
     </application>
 
 </manifest>

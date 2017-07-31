@@ -6,31 +6,37 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
+import java.util.List;
 
 public class SettingActivity extends AppCompatActivity {
     private EditText myUserHeight;
     private Button myButton;
-    private String mCurrentHeight;
-    private TextView mCurrentHeightTextView;
+    private Setting mCurrentSetting;
+    private SettingStorage mStorage;
 
     private static final String TAG = "SettingActivity";
     private static final String CURRENT_HEIGHT = "height";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        mCurrentHeight = data from database recent;
-
         setContentView(R.layout.activity_setting);
-        mCurrentHeightTextView = (TextView) findViewById(R.id.current_height);
-        mCurrentHeightTextView.setText(mCurrentHeight);
+
         myUserHeight = (EditText) findViewById(R.id.setting_user_height);
         myButton = (Button) findViewById(R.id.save_button);
+
+        //try to get setting if already exists
+        mStorage = SettingStorage.get(this);
+        List<Setting> existentSettings = mStorage.getSettings();
+        if(existentSettings.size()>0){
+            mCurrentSetting = existentSettings.get(0);
+            myUserHeight.setText(String.valueOf(mCurrentSetting.getMyHeight()));
+        }
+
+
         myButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCurrentHeight = myUserHeight.getText().toString();
                 saveOnDatabase(myUserHeight.getText().toString());
                 finish();
             }
@@ -45,12 +51,16 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void saveOnDatabase(String height) {
-        Setting setting = new Setting();
-        setting.setMyTitle("user_height");
-        setting.setMyHeight(new Double(height));
-        mCurrentHeightTextView.setText(height);
-        SettingStorage storage = SettingStorage.get(this);
-        storage.insertSetting(setting);
+        if(mCurrentSetting == null){
+            mCurrentSetting = new Setting();
+            mCurrentSetting.setMyTitle("user_height");
+            mCurrentSetting.setMyHeight(new Double(height));
+            mStorage.insertSetting(mCurrentSetting);
+        }else{
+            mCurrentSetting.setMyHeight(new Double(height));
+            mStorage.updateSetting(mCurrentSetting);
+        }
+
         Log.i(TAG, "saveOnDatabase: Saved ");
     }
 }
