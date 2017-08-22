@@ -15,21 +15,18 @@
         android:id="@+id/undo_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/undo"
+        android:drawableLeft="@drawable/btn_undo"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_alignParentBottom="true"/>
 
     <Button
         android:id="@+id/show_result_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/show_result"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp" />
+        android:drawableLeft="@drawable/btn_ok" />
+
 
 </RelativeLayout>
 
