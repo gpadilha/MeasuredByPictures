@@ -157,10 +157,10 @@ public class DrawingView extends View {
     private void displayMessage(){
         switch (mPathList.size()){
             case 0:
-                Toast.makeText(getContext(), R.string.draw_first_line, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.draw_first_line, Toast.LENGTH_LONG).show();
                 break;
             case 1:
-                Toast.makeText(getContext(), R.string.draw_second_line, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.draw_second_line, Toast.LENGTH_LONG).show();
                 break;
         }
     }
