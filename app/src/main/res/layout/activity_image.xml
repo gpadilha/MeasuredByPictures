@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/btn_undo"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:background="@null"/>
 
     <Button
         android:id="@+id/show_result_button"
@@ -25,7 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:drawableLeft="@drawable/btn_ok" />
+        android:drawableLeft="@drawable/btn_ok"
+        android:background="@null" />
 
 
 </RelativeLayout>

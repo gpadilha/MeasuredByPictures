@@ -38,7 +38,7 @@ public class ResultActivity extends AppCompatActivity {
         double height = target * parameter / reference;
 
         mTargetHeight = (TextView) findViewById(R.id.target_height);
-        mTargetHeight.setText(String.valueOf(Math.round(height)));
+        mTargetHeight.setText(String.valueOf(Math.round(height))+ " cm");
 
         mHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
